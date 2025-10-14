@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from models import db, User
-from utils.auth import token_required  # moraš imati utils/auth.py sa token_required dekoratorom
+from utils.auth import token_required 
 
 user_bp = Blueprint('user_bp', __name__)
 
