@@ -90,7 +90,8 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
-  width: 100%;
+  align-self: center;
+  margin-left: 1rem;
 }
 
 .confirm-btn:hover {
