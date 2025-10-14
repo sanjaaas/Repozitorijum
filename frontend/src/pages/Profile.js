@@ -123,7 +123,7 @@ function Profile() {
 
         <div className="profile-wrapper">
           <div className="profile-window">
-            {/* Leva strana */}
+            
             <div className="profile-left">
               <h2>Moj profil</h2>
 
@@ -155,7 +155,7 @@ function Profile() {
               </div>
             </div>
 
-            {/* Desna strana */}
+            
             <div className="profile-right">
               <h3>🧾 Istorija porudžbina</h3>
               {orders.length > 0 ? (
@@ -178,7 +178,7 @@ function Profile() {
         <Footer />
       </div>
 
-      {/* Modal za izmenu korisničkih podataka */}
+      
       {showEditModal && (
         <EditProfileModal
           isOpen={true}
@@ -188,7 +188,7 @@ function Profile() {
         />
       )}
 
-      {/* Modal za promenu lozinke */}
+  
       {showChangeModal && (
         <ChangePasswordModal
           isOpen={true}
@@ -196,7 +196,7 @@ function Profile() {
         />
       )}
 
-      {/* Modal za detalje porudžbine */}
+      
       {showOrderModal && (
         <OrderDetailsModal
           isOpen={true}

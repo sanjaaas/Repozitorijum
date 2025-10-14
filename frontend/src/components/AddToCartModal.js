@@ -8,7 +8,7 @@ export default function AddToCartModal({ book, onClose, onConfirm }) {
     const validQuantity = Number(quantity);
     if (validQuantity < 1 || isNaN(validQuantity)) return;
 
-    onConfirm(book.id, validQuantity); // šalje tačnu količinu
+    onConfirm(book.id, validQuantity); 
     onClose();
   };
 

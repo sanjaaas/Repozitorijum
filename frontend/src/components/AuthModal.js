@@ -56,7 +56,7 @@ export default function AuthModal({ mode: initialMode, onClose }) {
     }
   };
 
-  // ✅ Ako postoji token u URL-u, prikazujemo samo ResetPasswordModal
+  
   if (token) {
     return (
       <div className="auth-modal-overlay">

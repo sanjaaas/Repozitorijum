@@ -6,13 +6,16 @@ import Footer from '../components/Footer';
 import AuthModal from '../components/AuthModal';
 import Toast from '../components/Toast';
 import AddToCartModal from '../components/AddToCartModal';
+import EditBookModal from '../components/EditBookModal';
 import './BookDetails.css';
 
 export default function BookDetails() {
   const { id } = useParams();
   const [book, setBook] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showCartModal, setShowCartModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [toastData, setToastData] = useState(null);
   const [clickedButton, setClickedButton] = useState('');
 
@@ -22,6 +25,22 @@ export default function BookDetails() {
       .then(res => setBook(res.data))
       .catch(err => console.error('Greška:', err));
   }, [id]);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    axios
+      .get('http://127.0.0.1:5000/api/me', {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then(res => {
+        if (res.data.is_admin === true) {
+          setIsAdmin(true);
+        }
+      })
+      .catch(() => setIsAdmin(false));
+  }, []);
 
   const imageSrc = book?.image_url?.startsWith('/')
     ? `http://127.0.0.1:5000${book.image_url}`
@@ -65,11 +84,11 @@ export default function BookDetails() {
     }
   };
 
-  const handleCartConfirm = async (quantity) => {
+  const handleCartConfirm = async (bookId, quantity) => {
     const token = localStorage.getItem('token');
     try {
       const res = await axios.post('http://127.0.0.1:5000/api/cart', {
-        book_id: book.id,
+        book_id: bookId,
         quantity
       }, {
         headers: { Authorization: `Bearer ${token}` },
@@ -85,6 +104,12 @@ export default function BookDetails() {
       console.error('Greška pri dodavanju u korpu:', err.response);
       setToastData({ message: 'Greška pri dodavanju u korpu.' });
     }
+  };
+
+  const refreshBook = () => {
+    axios
+      .get(`http://127.0.0.1:5000/api/books/${id}`)
+      .then(res => setBook(res.data));
   };
 
   if (!book) return null;
@@ -110,19 +135,28 @@ export default function BookDetails() {
             ) : (
               <p className="book-detail-price">{book.price} RSD</p>
             )}
+
             <div className="book-detail-actions">
-              <button
-                className={`cart-btn ${clickedButton === 'cart' ? 'clicked' : ''}`}
-                onClick={() => handleAdd('cart')}
-              >
-                Dodaj u korpu
-              </button>
-              <button
-                className={`wishlist-btn ${clickedButton === 'wishlist' ? 'clicked' : ''}`}
-                onClick={() => handleAdd('wishlist')}
-              >
-                Dodaj u listu želja
-              </button>
+              {isAdmin ? (
+                <button onClick={() => setShowEditModal(true)}>
+                   Uredi knjigu
+                </button>
+              ) : (
+                <>
+                  <button
+                    className={`cart-btn ${clickedButton === 'cart' ? 'clicked' : ''}`}
+                    onClick={() => handleAdd('cart')}
+                  >
+                    Dodaj u korpu
+                  </button>
+                  <button
+                    className={`wishlist-btn ${clickedButton === 'wishlist' ? 'clicked' : ''}`}
+                    onClick={() => handleAdd('wishlist')}
+                  >
+                    Dodaj u listu želja
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -141,7 +175,7 @@ export default function BookDetails() {
         <AddToCartModal
           book={book}
           onClose={() => setShowCartModal(false)}
-          onConfirm={handleCartConfirm}
+          onConfirm={(bookId, quantity) => handleCartConfirm(bookId, quantity)}
         />
       )}
 
@@ -150,6 +184,14 @@ export default function BookDetails() {
           message={toastData.message}
           linkText={toastData.linkText}
           linkHref={toastData.linkHref}
+        />
+      )}
+
+      {showEditModal && (
+        <EditBookModal
+          book={book}
+          onClose={() => setShowEditModal(false)}
+          onBookUpdated={refreshBook}
         />
       )}
     </div>

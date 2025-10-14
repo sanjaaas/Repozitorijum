@@ -1,15 +1,16 @@
 from flask import Blueprint, request, jsonify
 from models import db, Book
 from sqlalchemy import or_
+from werkzeug.utils import secure_filename
+import os
 
 book_bp = Blueprint('book_bp', __name__)
 
-# ✅ Prikaz svih knjiga sa filtrima
+
 @book_bp.route('/books', methods=['GET'])
 def get_books():
     query = Book.query
 
-    # Pretraga po naslovu ili autoru
     query_param = request.args.get('query')
     if query_param:
         query = query.filter(
@@ -19,12 +20,10 @@ def get_books():
             )
         )
 
-    # Filtriranje po kategorijama (OR logika)
     categories = request.args.getlist('category')
     if categories:
         query = query.filter(Book.category.in_(categories))
 
-    # Filtriranje po akciji i preporuci (AND logika)
     on_sale = request.args.get('on_sale') == 'true'
     recommended = request.args.get('recommended') == 'true'
 
@@ -38,7 +37,6 @@ def get_books():
     elif recommended:
         query = query.filter(Book.is_recommended == True)
 
-    # Filtriranje po maksimalnoj ceni
     max_price = request.args.get('max_price')
     if max_price:
         try:
@@ -49,7 +47,13 @@ def get_books():
     books = query.all()
     return jsonify([b.to_dict() for b in books]), 200
 
-# ✅ Dodavanje nove knjige
+
+@book_bp.route('/books/<int:book_id>', methods=['GET'])
+def get_book(book_id):
+    book = Book.query.get_or_404(book_id)
+    return jsonify(book.to_dict())
+
+
 @book_bp.route('/books', methods=['POST'])
 def add_book():
     data = request.get_json()
@@ -66,20 +70,14 @@ def add_book():
         is_recommended=data.get('is_recommended', False),
         is_on_sale=data.get('is_on_sale', False),
         image_url=data.get('image_url'),
-        sale_price=data.get('sale_price')
+        sale_price=data.get('sale_price') if data.get('is_on_sale') else None
     )
     db.session.add(book)
     db.session.commit()
 
     return jsonify({"message": "Knjiga uspešno dodata", "book_id": book.id}), 201
 
-# ✅ Prikaz jedne knjige po ID-u
-@book_bp.route('/books/<int:book_id>', methods=['GET'])
-def get_book(book_id):
-    book = Book.query.get_or_404(book_id)
-    return jsonify(book.to_dict())
 
-# ✅ Ažuriranje knjige po ID-u
 @book_bp.route('/books/<int:book_id>', methods=['PUT'])
 def update_book(book_id):
     data = request.get_json()
@@ -108,3 +106,28 @@ def update_book(book_id):
 
     db.session.commit()
     return jsonify({'message': 'Knjiga uspešno ažurirana'}), 200
+
+
+@book_bp.route('/books/<int:book_id>', methods=['DELETE'])
+def delete_book(book_id):
+    book = Book.query.get(book_id)
+    if not book:
+        return jsonify({"error": "Knjiga nije pronađena"}), 404
+
+    db.session.delete(book)
+    db.session.commit()
+    return jsonify({"message": "Knjiga uspešno obrisana"}), 200
+
+
+@book_bp.route('/upload', methods=['POST'])
+def upload_image():
+    image = request.files.get('image')
+    if not image:
+        return jsonify({"error": "Nema slike"}), 400
+
+    filename = secure_filename(image.filename)
+    os.makedirs('static/images', exist_ok=True)
+    path = os.path.join('static/images', filename)
+    image.save(path)
+
+    return jsonify({"image_url": f"/static/images/{filename}"}), 200

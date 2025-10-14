@@ -27,11 +27,11 @@ export default function ForgotPasswordModal({ onClose }) {
         setError('');
 
         if (data.reset_token) {
-          // ✅ Zatvori modal pre preusmeravanja
+         
           setTimeout(() => {
             onClose();
             window.location.href = `/reset-password/${data.reset_token}`;
-          }, 1200); // kratak delay da korisnik vidi poruku
+          }, 1200); 
         }
       } else {
         setError(data.error || 'Greška pri slanju zahteva');

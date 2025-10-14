@@ -1,16 +1,16 @@
-/* Reset svih elemenata */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Cela visina viewport-a */
+
 html, body {
   height: 100%;
   overflow-x: hidden;
 }
-/* Plava pozadina cele stranice */
+
 body {
   background-color: #204d91;
   font-family: 'Segoe UI', sans-serif;
@@ -18,16 +18,15 @@ body {
   line-height: 1.5;
 }
 
-/* Glavni kontejner stranice */
 .home-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* ← koristi celu visinu ekrana */
+  min-height: 100vh; 
   overflow-x: hidden;
 }
 
 
-/* Header (gore desno prijava/registracija ili korisnički meni) */
+
 header {
   display: flex;
   justify-content: flex-end;
@@ -68,7 +67,7 @@ header a:hover {
   color: #fff;
 }
 
-/* Glavni deo stranice: Carousel levo, Search bar desno */
+
 .home-main {
   flex: 1;
   display: flex;
@@ -107,13 +106,12 @@ footer.site-footer {
 
 
 .carousel-wrapper {
-  max-width: 380px;
-  margin: 2rem auto;
+  max-width: clamp(280px, 80vw, 380px);
+  margin-inline: auto;
+  margin-block-start: clamp(2rem, 6vh, 3.8rem);
   position: relative;
-  flex: 1 1 40%;
-  margin-top: 3.8rem;
+  flex: 1 1 clamp(280px, 40%, 380px);
 }
-
 
 .slick-slide {
   display: flex !important;
@@ -238,7 +236,6 @@ footer.site-footer {
 
 
 
-/* Kontejner za SearchBar */
 .search-wrapper {
   flex: 1 1 100%;
   min-width: 280px;
@@ -278,7 +275,7 @@ footer.site-footer {
   border-radius: 8px;
   cursor: pointer;
   font-size: 0.9rem;
-  font-family: "Arial";
+  font-family: "Poppins", sans-serif;
   transition: background 0.3s ease, color 0.3s ease;
 }
 
@@ -314,7 +311,7 @@ footer.site-footer button:hover {
   color: #fff;
 }
 
-/* Override za react-slick strelice i tačkice */
+
 .carousel-wrapper .slick-prev:before,
 .carousel-wrapper .slick-next:before {
   color: #0077cc;
@@ -325,7 +322,7 @@ footer.site-footer button:hover {
   color: #0077cc;
 }
 
-/* Responsive za manje ekrane */
+
 @media (max-width: 768px) {
   .home-main {
     flex-direction: column;
@@ -342,7 +339,7 @@ footer.site-footer button:hover {
   }
 }
 
-/* 1. Desna kolona: vertikalni raspored */
+
 .search-promo {
   display: flex;
   flex-direction: column;
@@ -358,7 +355,7 @@ footer.site-footer button:hover {
   }
 }
 
-/* 2. Grupa input + dugme */
+
 .search-group {
   display: flex;
   gap: 1rem;
@@ -367,7 +364,7 @@ footer.site-footer button:hover {
   margin-top: 1rem;
   position: relative;
 }
-/* Padajući meni sa predlozima */
+
 .suggestion-list {
   list-style: none;
   margin: 0;

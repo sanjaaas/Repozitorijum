@@ -9,8 +9,8 @@ import Profile from './pages/Profile';
 import CategoryPage from './pages/CategoryPage';
 import AdminDashboard from './pages/AdminDashboard';
 import Wishlist from './pages/Wishlist';
-import KontaktPage from './pages/KontaktPage';
-import AuthModal from './components/AuthModal'; // ✅ dodato
+import AuthModal from './components/AuthModal'; 
+import BookDetails from './pages/BookDetail';
 
 export default function AppRoutes() {
   return (
@@ -25,8 +25,8 @@ export default function AppRoutes() {
         <Route path="/categories" element={<CategoryPage />} />
         <Route path="/books?action=true" element={<AllBooks />} />
         <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/kontakt" element={<KontaktPage />} />
-        <Route path="/reset-password/:token" element={<AuthModal />} /> {/* ✅ dodato */}
+        <Route path="/reset-password/:token" element={<AuthModal />} />
+        <Route path="/admin/book/:id" element={<BookDetail adminView={true} />} />
       </Routes>
     </BrowserRouter>
   );

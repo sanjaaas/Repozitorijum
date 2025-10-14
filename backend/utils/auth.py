@@ -1,4 +1,4 @@
-# utils/auth.py
+
 
 from functools import wraps
 from flask import request, jsonify
@@ -8,7 +8,7 @@ import datetime
 
 SECRET_KEY = "tajna_kljuc"
 
-# 🔐 Generiši JWT token
+
 def generate_token(user):
     payload = {
         "user_id": user.id,
@@ -17,7 +17,6 @@ def generate_token(user):
     }
     return jwt.encode(payload, SECRET_KEY, algorithm="HS256")
 
-# 🔐 Dekorator za zaštitu ruta
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):

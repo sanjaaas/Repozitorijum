@@ -7,6 +7,12 @@
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
 }
 
+h2 {
+  font-family: "Poppins", sans-serif;
+  text-align-last: center;
+  color:#005fa3;
+}
+
 .edit-overlay {
   background-color: rgba(0, 0, 0, 0.5);
 }
@@ -22,6 +28,7 @@
   flex-direction: column;
   font-weight: 500;
   color: #204d91;
+  
 }
 
 .edit-form input {

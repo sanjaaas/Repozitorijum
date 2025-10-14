@@ -1,4 +1,4 @@
-/* Glavni kontejner: sve između Header i Footer */
+
 .all-books-page {
   display: flex;
   flex-direction: column;
@@ -7,7 +7,7 @@
   font-family: "Poppins", sans-serif;
 }
 
-/* Srednji deo: wrapper za sadržaj */
+
 .all-books-wrapper {
   flex: 1;
   display: flex;
@@ -16,7 +16,7 @@
   padding: 3rem 0;
 }
 
-/* Bela kutija koja sadrži sidebar i knjige */
+
 .all-books-window {
   display: flex;
   background-color: #ffffff;
@@ -27,7 +27,7 @@
   overflow: hidden;
 }
 
-/* Sidebar */
+
 .sidebar {
   width: 240px;
   padding: 2rem;
@@ -35,7 +35,7 @@
   border-right: 1px solid #d0d8f0;
 }
 
-/* Sidebar dugmad */
+
 .tag-btn {
   background-color: #ffffff;
   color: #0077cc;
@@ -53,7 +53,7 @@
   color: #ffffff;
 }
 
-/* Desni deo: knjige */
+
 .books-window {
   flex: 1;
   padding: 2rem 3rem;
@@ -62,14 +62,14 @@
   flex-direction: column;
 }
 
-/* Naslov */
+
 .books-window h2 {
   font-size: 1.8rem;
   color: #204d91;
   margin-bottom: 1.5rem;
 }
 
-/* Aktivni tagovi */
+
 .active-tags {
   display: flex;
   flex-wrap: wrap;
@@ -95,7 +95,7 @@
   opacity: 0.6;
 }
 
-/* Grid knjiga */
+
 .book-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));

@@ -15,7 +15,7 @@ import os
 app = Flask(__name__)
 
 migrate = Migrate(app, db)
-# ✅ CORS konfiguracija — dozvoljava credentials
+
 CORS(app, supports_credentials=True)
 
 @app.after_request
@@ -28,12 +28,12 @@ def apply_cors_headers(response):
         response.headers["Access-Control-Allow-Methods"] = "GET,POST,PUT,DELETE,OPTIONS, PATCH"
     return response
 
-# ✅ Konfiguracija baze
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
-# ✅ Registracija blueprintova
+
 app.register_blueprint(auth_bp, url_prefix='/api')
 app.register_blueprint(user_bp, url_prefix='/api')
 app.register_blueprint(book_bp, url_prefix='/api')
@@ -43,11 +43,11 @@ app.register_blueprint(order_bp, url_prefix='/api')
 app.register_blueprint(admin_bp, url_prefix='/api/admin')
 app.register_blueprint(debug_bp, url_prefix="/api")
 
-# ✅ Kreiranje baze ako ne postoji
+
 with app.app_context():
     os.makedirs("instance", exist_ok=True)
     db.create_all()
 
-# ✅ Pokretanje servera
+
 if __name__ == "__main__":
     app.run(debug=True, host="127.0.0.1", port=5000)

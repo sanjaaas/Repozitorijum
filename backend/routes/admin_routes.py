@@ -3,7 +3,7 @@ from models import db, Book
 
 admin_bp = Blueprint('admin_bp', __name__)
 
-# 🔹 Dodaj novu knjigu
+
 @admin_bp.route('/books/add', methods=['POST'])
 def add_book():
     data = request.get_json()
@@ -28,7 +28,7 @@ def add_book():
 
     return jsonify({"message": "Knjiga dodata", "book_id": book.id}), 201
 
-# 🔹 Izmeni postojeću knjigu
+
 @admin_bp.route('/books/<int:book_id>', methods=['PUT'])
 def update_book(book_id):
     data = request.get_json()
@@ -43,7 +43,7 @@ def update_book(book_id):
     db.session.commit()
     return jsonify({"message": "Knjiga izmenjena", "book_id": book.id}), 200
 
-# 🔹 Obriši knjigu
+
 @admin_bp.route('/books/<int:book_id>', methods=['DELETE'])
 def delete_book(book_id):
     book = Book.query.get(book_id)
@@ -54,7 +54,7 @@ def delete_book(book_id):
     db.session.commit()
     return jsonify({"message": "Knjiga obrisana", "book_id": book_id}), 200
 
-# 🔹 Postavi knjigu na akciju
+
 @admin_bp.route('/books/<int:book_id>/sale', methods=['PUT'])
 def set_sale_price(book_id):
     data = request.get_json()
@@ -71,7 +71,7 @@ def set_sale_price(book_id):
 
     return jsonify({"message": "Knjiga je postavljena na akciju", "book_id": book.id}), 200
 
-# 🔹 Ukloni knjigu sa akcije
+
 @admin_bp.route('/books/<int:book_id>/sale/remove', methods=['PUT'])
 def remove_sale(book_id):
     book = Book.query.get(book_id)
@@ -82,7 +82,6 @@ def remove_sale(book_id):
     db.session.commit()
     return jsonify({"message": "Akcija uklonjena", "book_id": book.id}), 200
 
-# 🔹 Postavi knjigu kao preporučenu
 @admin_bp.route('/books/<int:book_id>/recommend', methods=['PUT'])
 def recommend_book(book_id):
     book = Book.query.get(book_id)
@@ -93,7 +92,7 @@ def recommend_book(book_id):
     db.session.commit()
     return jsonify({"message": "Knjiga je preporučena", "book_id": book.id}), 200
 
-# 🔹 Ukloni knjigu iz preporučenih
+
 @admin_bp.route('/books/<int:book_id>/recommend/remove', methods=['PUT'])
 def remove_recommendation(book_id):
     book = Book.query.get(book_id)
@@ -103,3 +102,24 @@ def remove_recommendation(book_id):
     book.is_recommended = False
     db.session.commit()
     return jsonify({"message": "Preporuka uklonjena", "book_id": book.id}), 200
+from models import User, Order, OrderItem, Book
+from sqlalchemy import func
+
+@admin_bp.route('/stats', methods=['GET'])
+def get_admin_stats():
+    user_count = User.query.count()
+    order_count = Order.query.count()
+    total_revenue = db.session.query(func.sum(Order.total_price)).scalar() or 0
+
+    
+    top_books = db.session.query(
+        Book.title,
+        func.sum(OrderItem.quantity).label('total_sold')
+    ).join(OrderItem).group_by(Book.id).order_by(func.sum(OrderItem.quantity).desc()).limit(5).all()
+
+    return jsonify({
+        "user_count": user_count,
+        "order_count": order_count,
+        "total_revenue": round(total_revenue, 2),
+        "top_books": [{"title": b[0], "sold": b[1]} for b in top_books]
+    })

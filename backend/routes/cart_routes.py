@@ -3,9 +3,9 @@ from models import db, CartItem, Book
 import jwt
 
 cart_bp = Blueprint('cart_bp', __name__)
-SECRET_KEY = "tajna_kljuc"  # mora da se poklapa sa auth.py i utils.auth.py
+SECRET_KEY = "tajna_kljuc" 
 
-# ✅ Test ruta za dekodiranje tokena
+
 @cart_bp.route('/test-token', methods=['GET'])
 def test_token():
     auth_header = request.headers.get("Authorization")
@@ -19,7 +19,7 @@ def test_token():
     except Exception as e:
         return jsonify({"error": str(e)}), 401
 
-# ✅ Dodavanje knjige u korpu (sabira količine)
+
 @cart_bp.route('/cart', methods=['POST'])
 def add_to_cart():
     auth_header = request.headers.get("Authorization")
@@ -43,8 +43,8 @@ def add_to_cart():
     except (ValueError, TypeError):
         quantity = 1
 
-    if not book_id:
-        return jsonify({"error": "Nedostaje book_id"}), 400
+    if not book_id or quantity < 1:
+        return jsonify({"error": "Neispravni podaci"}), 400
 
     existing_item = CartItem.query.filter_by(user_id=user_id, book_id=book_id).first()
     if existing_item:
@@ -56,7 +56,7 @@ def add_to_cart():
     db.session.commit()
     return jsonify({"message": "Knjiga dodata u korpu"}), 201
 
-# ✅ Prikaz korpe sa detaljima knjiga
+
 @cart_bp.route('/cart', methods=['GET'])
 def get_cart():
     auth_header = request.headers.get("Authorization")
@@ -89,7 +89,7 @@ def get_cart():
             })
     return jsonify(result), 200
 
-# ✅ Smanjenje ili povećanje količine jedne stavke u korpi
+
 @cart_bp.route('/cart/<int:item_id>', methods=['PATCH'])
 def update_cart_item(item_id):
     auth_header = request.headers.get("Authorization")
@@ -124,25 +124,25 @@ def update_cart_item(item_id):
 
     db.session.commit()
 
-    # Vrati ažuriranu listu stavki u korpi
+   
     items = CartItem.query.filter_by(user_id=user_id).all()
     result = []
     for i in items:
         book = Book.query.get(i.book_id)
         if book:
             result.append({
-                "cart_id": book.id,
+                "cart_id": i.id,
                 "book_id": book.id,
                 "title": book.title,
                 "author": book.author,
                 "price": book.price,
                 "final_price": book.sale_price if book.sale_price else book.price,
-                "quantity": book.quantity,
+                "quantity": i.quantity,
                 "image_url": book.image_url
             })
     return jsonify(result), 200
 
-# ✅ Brisanje jedne stavke iz korpe
+
 @cart_bp.route('/cart/<int:item_id>', methods=['DELETE'])
 def delete_cart_item(item_id):
     item = CartItem.query.get(item_id)
@@ -153,7 +153,7 @@ def delete_cart_item(item_id):
     db.session.commit()
     return jsonify({"message": "Stavka obrisana iz korpe"}), 200
 
-# ✅ Brisanje svih stavki iz korpe
+
 @cart_bp.route('/cart/all', methods=['DELETE'])
 def delete_all_cart_items():
     auth_header = request.headers.get("Authorization")

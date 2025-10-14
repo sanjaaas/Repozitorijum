@@ -8,7 +8,7 @@ from utils.auth import generate_token, token_required
 
 auth_bp = Blueprint('auth_bp', __name__)
 
-# ✅ Registracija korisnika
+
 @auth_bp.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
@@ -44,7 +44,7 @@ def register():
         "is_admin": user.is_admin
     }), 201
 
-# ✅ Prijava korisnika
+
 @auth_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -66,7 +66,7 @@ def login():
         "is_admin": user.is_admin
     }), 200
 
-# ✅ Dohvati podatke o korisniku + porudžbine
+
 @auth_bp.route('/me', methods=['GET'])
 @token_required
 def get_current_user(current_user):
@@ -109,7 +109,7 @@ def get_current_user(current_user):
         "orders": orders_data
     }), 200
 
-# ✅ Izmena korisničkih podataka
+
 @auth_bp.route('/update-profile', methods=['PUT'])
 @token_required
 def update_profile(current_user):
@@ -125,7 +125,7 @@ def update_profile(current_user):
 
     return jsonify({"message": "Profil uspešno ažuriran"}), 200
 
-# ✅ Promena lozinke za prijavljenog korisnika
+
 @auth_bp.route('/change-password', methods=['PUT'])
 @token_required
 def change_password(current_user):
@@ -147,7 +147,7 @@ def change_password(current_user):
 
     return jsonify({"message": "Lozinka uspešno promenjena"}), 200
 
-# ✅ Brisanje naloga
+
 @auth_bp.route('/delete-account', methods=['DELETE'])
 @token_required
 def delete_account(current_user):
@@ -155,7 +155,7 @@ def delete_account(current_user):
     db.session.commit()
     return jsonify({"message": "Nalog je uspešno obrisan"}), 200
 
-# ✅ Reset lozinke — zahtev
+
 @auth_bp.route('/reset-password-request', methods=['POST'])
 def reset_password_request():
     data = request.get_json()
@@ -179,7 +179,7 @@ def reset_password_request():
         "reset_token": token
     }), 200
 
-# ✅ Reset lozinke — potvrda
+
 @auth_bp.route('/reset-password/<token>', methods=['POST'])
 def reset_password(token):
     data = request.get_json()

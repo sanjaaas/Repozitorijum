@@ -1,7 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./OrderModal.css";
 
 function OrderModal({ orderData, setOrderData, onConfirm, onCancel }) {
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    fetch("http://127.0.0.1:5000/api/cart", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => res.json())
+      .then((items) => {
+        const sum = items.reduce((acc, item) => {
+          const price = Number(item.final_price || item.price);
+          return acc + price * item.quantity;
+        }, 0);
+        setTotal(sum);
+      })
+      .catch((err) => {
+        console.error("Greška pri sabiranju korpe:", err);
+        setTotal(0);
+      });
+  }, []);
+
   return (
     <div className="modal-overlay">
       <div className="modal-content">
@@ -24,6 +45,12 @@ function OrderModal({ orderData, setOrderData, onConfirm, onCancel }) {
           value={orderData.phone}
           onChange={(e) => setOrderData({ ...orderData, phone: e.target.value })}
         />
+
+        <div className="total-price">
+          <p>Ukupno za naplatu:</p>
+          <h4>{total.toFixed(2)} RSD</h4>
+        </div>
+
         <div className="modal-actions">
           <button onClick={onConfirm}>Potvrdi</button>
           <button onClick={onCancel}>Otkaži</button>

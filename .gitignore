@@ -10,3 +10,6 @@ npm-debug.log
 
 # Docker
 *.log
+
+export.sh
+full_project_dump.txt

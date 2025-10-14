@@ -3,9 +3,9 @@ from models import db, WishlistItem, Book
 import jwt
 
 wishlist_bp = Blueprint('wishlist_bp', __name__)
-SECRET_KEY = "tajna_kljuc"  # mora da se poklapa sa onim u auth_routes.py
+SECRET_KEY = "tajna_kljuc"  
 
-# ✅ Dodavanje knjige u listu želja
+
 @wishlist_bp.route('/wishlist', methods=['POST'])
 def add_to_wishlist():
     auth_header = request.headers.get("Authorization")
@@ -26,7 +26,7 @@ def add_to_wishlist():
     if not book_id:
         return jsonify({"error": "Nedostaje book_id"}), 400
 
-    # ✅ Ako knjiga već postoji u listi želja, ne dodaj ponovo
+    
     existing_item = WishlistItem.query.filter_by(user_id=user_id, book_id=book_id).first()
     if existing_item:
         return jsonify({"message": "Knjiga je već u listi želja"}), 200
@@ -37,7 +37,7 @@ def add_to_wishlist():
 
     return jsonify({"message": "Knjiga dodata u listu želja"}), 201
 
-# ✅ Prikaz korisničke liste želja sa detaljima knjiga
+
 @wishlist_bp.route('/wishlist', methods=['GET'])
 def get_wishlist():
     auth_header = request.headers.get("Authorization")
@@ -68,7 +68,7 @@ def get_wishlist():
             })
     return jsonify(result), 200
 
-# ✅ Brisanje stavke iz liste želja
+
 @wishlist_bp.route('/wishlist/<int:item_id>', methods=['DELETE'])
 def delete_wishlist_item(item_id):
     item = WishlistItem.query.get(item_id)

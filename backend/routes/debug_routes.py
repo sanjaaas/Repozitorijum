@@ -4,16 +4,16 @@ from models import User
 
 debug_bp = Blueprint('debug_bp', __name__)
 
-# ✅ Test ruta za proveru tokena i korisnika
+
 @debug_bp.route('/token-check', methods=['GET'])
 @token_required
 def token_check(current_user):
-    print("🔍 Token validan")
-    print("🧾 ID:", current_user.id)
-    print("🧾 Email:", current_user.email)
-    print("🧾 Ime:", current_user.first_name)
-    print("🧾 Prezime:", current_user.last_name)
-    print("🧾 Admin:", current_user.is_admin)
+    print("Token validan")
+    print("ID:", current_user.id)
+    print("Email:", current_user.email)
+    print("Ime:", current_user.first_name)
+    print("Prezime:", current_user.last_name)
+    print("Admin:", current_user.is_admin)
 
     return jsonify({
         "status": "Token validan",

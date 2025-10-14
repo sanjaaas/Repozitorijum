@@ -57,7 +57,7 @@ export default function HomePage() {
         <div className="search-promo">
           <img src="/logo.png" alt="Logo" className="site-logo" />
 
-          {/* grupa: input + pretraži dugme */}
+          
           <div className="search-group">
            <input
               type="text"
@@ -94,7 +94,7 @@ export default function HomePage() {
             </button>
           </div>
 
-          {/* promo dugmad odmah ispod */}
+        
           <div className="promo-buttons under-search">
             <PromoBanner
               onSve={() => navigate('/books')}
@@ -111,7 +111,7 @@ export default function HomePage() {
 
       <Footer />
 
-      {/* Modal za kategorije */}
+     
       {showModal && (
         <CategoryModal
           categories={categories}

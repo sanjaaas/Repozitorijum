@@ -5,7 +5,7 @@ from datetime import datetime
 
 order_bp = Blueprint('order_bp', __name__)
 
-# ✅ Kreiranje porudžbine iz korpe sa shipping formom
+
 @order_bp.route('/order/create', methods=['POST'])
 @token_required
 def create_order(current_user):
@@ -33,8 +33,6 @@ def create_order(current_user):
         created_at=datetime.utcnow(),
         full_name=name,
         address=address,
-        city=city,
-        postal_code=postal_code,
         phone=phone
     )
     db.session.add(order)
@@ -56,7 +54,7 @@ def create_order(current_user):
         "total_price": total_price
     }), 201
 
-# ✅ Prikaz svih porudžbina korisnika
+
 @order_bp.route('/orders', methods=['GET'])
 @token_required
 def get_user_orders(current_user):
@@ -68,7 +66,7 @@ def get_user_orders(current_user):
         } for o in orders
     ]), 200
 
-# ✅ Prikaz svih porudžbina za admina
+
 @order_bp.route('/admin/orders', methods=['GET'])
 def admin_get_all_orders():
     orders = Order.query.all()
@@ -79,7 +77,7 @@ def admin_get_all_orders():
         } for o in orders
     ]), 200
 
-# ✅ Ažuriranje statusa porudžbine
+
 @order_bp.route('/admin/orders/<int:order_id>/status', methods=['PUT'])
 def update_order_status(order_id):
     data = request.get_json()

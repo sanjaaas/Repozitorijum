@@ -1,4 +1,4 @@
-/* Glavni kontejner stranice */
+
 .cart-page,
 .wishlist-page {
   display: flex;
@@ -8,7 +8,7 @@
   font-family: "Poppins", sans-serif;
 }
 
-/* Wrapper za sadržaj */
+
 .cart-wrapper,
 .wishlist-wrapper {
   flex: 1;
@@ -18,7 +18,7 @@
   padding: 3rem 0;
 }
 
-/* Bela kutija sa senkom */
+
 .cart-window,
 .wishlist-window {
   background-color: #ffffff;
@@ -32,7 +32,7 @@
   gap: 1.5rem;
 }
 
-/* Red sa knjigom */
+
 .cart-item-row,
 .wishlist-item-row {
   display: flex;
@@ -50,7 +50,7 @@
   transform: scale(1.02);
 }
 
-/* Slika knjige */
+
 .item-image {
   width: 120px;
   height: auto;
@@ -59,7 +59,7 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* Informacije o knjizi */
+
 .item-info {
   flex: 1;
   display: flex;
@@ -79,7 +79,6 @@
   color: #333;
 }
 
-/* Dugmad za akcije */
 .item-actions {
   display: flex;
   flex-direction: column;
@@ -103,7 +102,7 @@
   color: #0077cc;
 }
 
-/* Dugme "Ukloni sve" */
+
 .remove-all-wrapper {
   display: flex;
   justify-content: flex-end;

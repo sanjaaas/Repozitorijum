@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 db = SQLAlchemy()
 
-# 👤 Korisnik
+#  Korisnik
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(100), nullable=False)
@@ -26,7 +26,7 @@ class User(db.Model):
             "is_admin": self.is_admin
         }
 
-# 📚 Knjiga
+#  Knjiga
 class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
@@ -55,7 +55,7 @@ class Book(db.Model):
             "image_url": self.image_url
         }
 
-# 💖 Lista želja
+#  Lista želja
 class WishlistItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -69,7 +69,7 @@ class WishlistItem(db.Model):
             "book": self.book.to_dict()
         }
 
-# 🛒 Korpa
+#  Korpa
 class CartItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -85,7 +85,7 @@ class CartItem(db.Model):
             "quantity": self.quantity
         }
 
-# 💳 Porudžbina
+# Porudžbina
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -93,11 +93,9 @@ class Order(db.Model):
     total_price = db.Column(db.Float, nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
-    # 📦 Shipping info
+    #  Shipping info
     full_name = db.Column(db.String(100))
     address = db.Column(db.String(200))
-    city = db.Column(db.String(100))
-    postal_code = db.Column(db.String(20))
     phone = db.Column(db.String(30))
 
     items = db.relationship('OrderItem', backref='order', lazy=True)
@@ -111,12 +109,10 @@ class Order(db.Model):
             "created_at": self.created_at.strftime("%Y-%m-%d %H:%M:%S"),
             "full_name": self.full_name,
             "address": self.address,
-            "city": self.city,
-            "postal_code": self.postal_code,
             "phone": self.phone
         }
 
-# 📦 Stavka porudžbine
+#  Stavka porudžbine
 class OrderItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
@@ -134,7 +130,7 @@ class OrderItem(db.Model):
             "item_total": self.book.price * self.quantity
         }
 
-# 🔐 Token za reset lozinke
+#  Token za reset lozinke
 class PasswordResetToken(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     token = db.Column(db.String(64), unique=True, nullable=False)
