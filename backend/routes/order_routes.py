@@ -14,9 +14,7 @@ def create_order(current_user):
     name = data.get("name")
     address = data.get("address")
     phone = data.get("phone")
-    city = data.get("city", "")
-    postal_code = data.get("postal_code", "")
-
+   
     if not name or not address or not phone:
         return jsonify({"error": "Nedostaju podaci za dostavu"}), 400
 

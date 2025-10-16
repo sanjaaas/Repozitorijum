@@ -14,6 +14,10 @@ import os
 
 app = Flask(__name__)
 
+@app.route('/')
+def index():
+    return 'Backend radi!'
+
 migrate = Migrate(app, db)
 
 CORS(app, supports_credentials=True)
