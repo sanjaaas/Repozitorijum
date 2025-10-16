@@ -6,10 +6,10 @@ WORKDIR /app
 COPY package*.json ./
 
 RUN npm install
+RUN npm install react-scripts@5.0.1
 
 
 COPY . .
-ENV NODE_ENV=development
 
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD HOST=0.0.0.0 npm start

@@ -14,7 +14,7 @@
     "slick-carousel": "^1.8.1"
   },
   "scripts": {
-    "start": "cross-env HOST=0.0.0.0 react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build"
   },
   "browserslist": {
@@ -28,8 +28,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "cross-env": "^10.1.0"
   }
 }
