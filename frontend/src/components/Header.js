@@ -16,7 +16,7 @@ function Header() {
 
     setFadeState('fade-out');
 
-    axios.get('http://127.0.0.1:5000/api/me', {
+    axios.get('/api/me', {
       headers: { Authorization: `Bearer ${token}` },
       withCredentials: true
     })

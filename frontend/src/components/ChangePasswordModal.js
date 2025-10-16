@@ -20,7 +20,7 @@ function ChangePasswordModal({ isOpen, onRequestClose }) {
     try {
       const token = localStorage.getItem('token');
       const res = await axios.put(
-        'http://127.0.0.1:5000/api/change-password',
+        '/api/change-password',
         { current_password: currentPassword, new_password: newPassword },
         { headers: { Authorization: `Bearer ${token}` } }
       );

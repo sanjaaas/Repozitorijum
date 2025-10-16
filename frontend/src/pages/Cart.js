@@ -22,7 +22,7 @@ function Cart() {
 
   const fetchCart = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:5000/api/cart", {
+      const res = await fetch("/api/cart", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -42,7 +42,7 @@ function Cart() {
 
   const handleDecrease = async (itemId) => {
     try {
-      const res = await fetch(`http://127.0.0.1:5000/api/cart/${itemId}`, {
+      const res = await fetch(`/api/cart/${itemId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -61,7 +61,7 @@ function Cart() {
 
   const handleRemoveAll = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:5000/api/cart/all", {
+      const res = await fetch("/api/cart/all", {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -82,7 +82,7 @@ function Cart() {
     }
 
     try {
-      const res = await fetch("http://127.0.0.1:5000/api/order/create", {
+      const res = await fetch("/api/order/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -105,7 +105,7 @@ function Cart() {
 
   const handleAddToCart = async (bookId, quantity) => {
     try {
-      const res = await fetch("http://127.0.0.1:5000/api/cart", {
+      const res = await fetch("/api/cart", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -114,7 +114,7 @@ function Cart() {
         body: JSON.stringify({ book_id: bookId, quantity }),
       });
       if (res.ok) {
-        fetchCart(); // osveži korpu
+        fetchCart(); 
       }
     } catch (err) {
       console.error("Greška pri dodavanju u korpu:", err);
@@ -140,7 +140,7 @@ function Cart() {
                   onClick={() => navigate(`/books/${item.book_id}`)}
                 >
                   <img
-                    src={`http://127.0.0.1:5000${item.image_url}`}
+                    src={item.image_url}
                     alt={item.title}
                     className="item-image"
                   />

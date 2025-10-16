@@ -7,7 +7,7 @@ function BookCard({ book }) {
   const bookId = book.id || book._id;
 
   const imageSrc = book.image_url?.startsWith('/')
-    ? `http://127.0.0.1:5000${book.image_url}`
+    ? book.image_url
     : book.image_url;
 
   return (

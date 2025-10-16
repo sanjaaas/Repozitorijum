@@ -19,7 +19,7 @@ function Wishlist() {
   useEffect(() => {
     async function fetchWishlist() {
       try {
-        const res = await fetch("http://127.0.0.1:5000/api/wishlist", {
+        const res = await fetch("/api/wishlist", {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
@@ -36,7 +36,7 @@ function Wishlist() {
 
   const handleRemoveItem = async (wishlistId) => {
     try {
-      const res = await fetch(`http://127.0.0.1:5000/api/wishlist/${wishlistId}`, {
+      const res = await fetch(`/api/wishlist/${wishlistId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -51,7 +51,7 @@ function Wishlist() {
   const handleRemoveAll = async () => {
     try {
       for (const item of items) {
-        await fetch(`http://127.0.0.1:5000/api/wishlist/${item.wishlist_id}`, {
+        await fetch(`/api/wishlist/${item.wishlist_id}`, {
           method: "DELETE",
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -71,7 +71,7 @@ function Wishlist() {
 
   const handleConfirmAddToCart = async (bookId, quantity) => {
     try {
-      await fetch("http://127.0.0.1:5000/api/cart", {
+      await fetch("/api/cart", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -90,7 +90,7 @@ function Wishlist() {
   const handleAddAllToCart = async () => {
     try {
       for (const item of items) {
-        await fetch("http://127.0.0.1:5000/api/cart", {
+        await fetch("/api/cart", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -125,7 +125,7 @@ function Wishlist() {
                   onClick={() => navigate(`/books/${item.book_id}`)}
                 >
                   <img
-                    src={`http://127.0.0.1:5000${item.image_url}`}
+                    src={item.image_url}
                     alt={item.title}
                     className="item-image"
                   />

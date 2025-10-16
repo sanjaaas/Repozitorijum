@@ -12,7 +12,7 @@ export default function Carousel() {
 
 useEffect(() => {
   axios
-    .get('http://127.0.0.1:5000/api/books?recommended=true')
+    .get('/api/books?recommended=true')
     .then(res => setKnjige(res.data))
     .catch(err => console.error('Greška:', err));
 }, []);
@@ -40,7 +40,7 @@ useEffect(() => {
               onClick={() => navigate(`/books/${knjiga.id}`)} 
             >
               <img
-                src={`http://127.0.0.1:5000${knjiga.image_url}`}
+                src={knjiga.image_url}
                 alt={knjiga.title}
                 className="carousel-image"
               />

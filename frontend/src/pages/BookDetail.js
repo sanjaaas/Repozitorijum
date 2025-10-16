@@ -21,7 +21,7 @@ export default function BookDetails() {
 
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:5000/api/books/${id}`)
+      .get(`/api/books/${id}`)
       .then(res => setBook(res.data))
       .catch(err => console.error('Greška:', err));
   }, [id]);
@@ -31,7 +31,7 @@ export default function BookDetails() {
     if (!token) return;
 
     axios
-      .get('http://127.0.0.1:5000/api/me', {
+      .get('/api/me', {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(res => {
@@ -43,7 +43,7 @@ export default function BookDetails() {
   }, []);
 
   const imageSrc = book?.image_url?.startsWith('/')
-    ? `http://127.0.0.1:5000${book.image_url}`
+    ? book.image_url
     : book?.image_url;
 
   const handleAdd = (target) => {
@@ -66,7 +66,7 @@ export default function BookDetails() {
   const handleWishlistAdd = async () => {
     const token = localStorage.getItem('token');
     try {
-      const res = await axios.post('http://127.0.0.1:5000/api/wishlist', {
+      const res = await axios.post('/api/wishlist', {
         book_id: book.id
       }, {
         headers: { Authorization: `Bearer ${token}` },
@@ -87,7 +87,7 @@ export default function BookDetails() {
   const handleCartConfirm = async (bookId, quantity) => {
     const token = localStorage.getItem('token');
     try {
-      const res = await axios.post('http://127.0.0.1:5000/api/cart', {
+      const res = await axios.post('/api/cart', {
         book_id: bookId,
         quantity
       }, {
@@ -108,7 +108,7 @@ export default function BookDetails() {
 
   const refreshBook = () => {
     axios
-      .get(`http://127.0.0.1:5000/api/books/${id}`)
+      .get(`/api/books/${id}`)
       .then(res => setBook(res.data));
   };
 

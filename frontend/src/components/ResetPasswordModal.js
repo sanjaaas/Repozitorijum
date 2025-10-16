@@ -14,7 +14,7 @@ export default function ResetPasswordModal({ token, onClose }) {
     }
 
     try {
-      const res = await fetch(`http://127.0.0.1:5000/api/reset-password/${token}`, {
+      const res = await fetch(`api/reset-password/${token}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ new_password: newPassword })

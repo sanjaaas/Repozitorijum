@@ -45,7 +45,7 @@ function AddBookModal({ onClose, onBookAdded }) {
 
     setUploading(true);
     try {
-      const res = await axios.post('http://127.0.0.1:5000/api/upload', form, {
+      const res = await axios.post('api/upload', form, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
@@ -81,7 +81,7 @@ function AddBookModal({ onClose, onBookAdded }) {
     };
 
     try {
-      await axios.post('http://127.0.0.1:5000/api/books', cleanData, {
+      await axios.post('/api/books', cleanData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       onBookAdded();

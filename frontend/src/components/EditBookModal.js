@@ -32,7 +32,7 @@ function EditBookModal({ book, onClose, onBookUpdated }) {
 
     setUploading(true);
     try {
-      const res = await axios.post('http://127.0.0.1:5000/api/upload', form, {
+      const res = await axios.post('/api/upload', form, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
@@ -63,7 +63,7 @@ function EditBookModal({ book, onClose, onBookUpdated }) {
     };
 
     try {
-      await axios.put(`http://127.0.0.1:5000/api/books/${book.id}`, cleanData, {
+      await axios.put(`/api/books/${book.id}`, cleanData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       onBookUpdated();
@@ -108,7 +108,7 @@ function EditBookModal({ book, onClose, onBookUpdated }) {
             <img src={URL.createObjectURL(imageFile)} alt="Preview" className="image-preview" />
           ) : (
             formData.image_url && (
-              <img src={`http://127.0.0.1:5000${formData.image_url}`} alt="Postojeća slika" className="image-preview" />
+              <img src={formData.image_url} alt="Postojeća slika" className="image-preview" />
             )
           )}
           {uploading && <p>⏳ Uploadujem sliku...</p>}

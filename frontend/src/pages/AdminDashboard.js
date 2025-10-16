@@ -20,7 +20,7 @@ function AdminDashboard() {
   const headers = { Authorization: `Bearer ${token}` };
 
   const fetchBooks = () => {
-    axios.get('http://127.0.0.1:5000/api/books', { headers })
+    axios.get('/api/books', { headers })
       .then(res => setBooks(res.data))
       .catch(() => setBooks([]));
   };
@@ -28,7 +28,7 @@ function AdminDashboard() {
   useEffect(() => {
     fetchBooks();
 
-    axios.get('http://127.0.0.1:5000/api/admin/stats', { headers })
+    axios.get('/api/admin/stats', { headers })
       .then(res => setStats(res.data))
       .catch(() => setStats(null));
   }, []);
@@ -76,8 +76,8 @@ function AdminDashboard() {
             <div className="book-grid">
               {books.map(book => {
                 const imageSrc = book.image_url?.startsWith('/')
-                  ? `http://127.0.0.1:5000${book.image_url}`
-                  : `http://127.0.0.1:5000/static/images/${book.image_url}`;
+                  ? book.image_url
+                  : '/static/images/${book.image_url}';
 
                 return (
                   <div key={book.id} className="book-card" onClick={() => navigate(`/admin/book/${book.id}`)}>

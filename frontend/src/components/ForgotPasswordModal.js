@@ -14,7 +14,7 @@ export default function ForgotPasswordModal({ onClose }) {
     }
 
     try {
-      const res = await fetch('http://127.0.0.1:5000/api/reset-password-request', {
+      const res = await fetch('/api/reset-password-request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })

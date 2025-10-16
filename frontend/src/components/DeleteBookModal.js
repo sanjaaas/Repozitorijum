@@ -7,7 +7,7 @@ function DeleteBookModal({ book, onClose, onBookDeleted }) {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://127.0.0.1:5000/api/books/${book.id}`, {
+      await axios.delete(`/api/books/${book.id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       onBookDeleted(book.id);

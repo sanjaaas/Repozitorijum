@@ -33,7 +33,7 @@ export default function OrderDetailsModal({ isOpen, onRequestClose, order }) {
               onClick={() => handleClick(item.book_id)}
             >
               <img
-                src={`http://127.0.0.1:5000${item.image_url}`}
+                src={item.image_url}
                 alt={item.title}
                 className="order-item-image"
               />

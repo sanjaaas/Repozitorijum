@@ -1,7 +1,10 @@
 # Python
-venv/
 __pycache__/
 *.pyc
+
+#Baza
+instance/
+
 
 # Node
 node_modules/
@@ -11,5 +14,3 @@ npm-debug.log
 # Docker
 *.log
 
-export.sh
-full_project_dump.txt

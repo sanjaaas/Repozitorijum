@@ -28,8 +28,8 @@ export default function AuthModal({ mode: initialMode, onClose }) {
 
   const handleSubmit = async () => {
     const url = mode === 'login'
-      ? 'http://127.0.0.1:5000/api/login'
-      : 'http://127.0.0.1:5000/api/register';
+      ? '/api/login'
+      : '/api/register';
 
     if (!formData.email || !formData.password || (mode === 'register' && (!formData.first_name || !formData.last_name))) {
       setError("Popunite sva polja");

@@ -72,7 +72,6 @@ function AllBooks() {
       query.append('recommended', 'true');
     }
 
-    // Dodaj sve izabrane kategorije
     const allCategories = ['Popularna psihologija', 'Roman', 'Klasici', 'Istorijski roman', 'Deca'];
     const selectedCategories = activeTags.filter(tag => allCategories.includes(tag));
     selectedCategories.forEach(cat => {
@@ -84,8 +83,8 @@ function AllBooks() {
     }
 
     const url = query.toString().length > 0
-      ? `http://127.0.0.1:5000/api/books?${query.toString()}`
-      : `http://127.0.0.1:5000/api/books`;
+      ? `/api/books?${query.toString()}`
+      : `/api/books`;
 
     console.log('Zahtev ka backendu:', url);
 

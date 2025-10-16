@@ -37,7 +37,7 @@ export default function HomePage() {
 
   if (value.trim().length > 1) {
     axios
-      .get(`http://127.0.0.1:5000/api/books?query=${value}`)
+      .get(`/api/books?query=${value}`)
       .then(res => setSuggestions(res.data))
       .catch(err => console.error('Greška:', err));
   } else {
@@ -73,7 +73,7 @@ export default function HomePage() {
                       <ul className="suggestion-list">
             {suggestions.map(book => {
               const imageSrc = book.image_url?.startsWith('/')
-                ? `http://127.0.0.1:5000${book.image_url}`
+                ? book.image_url
                 : book.image_url;
 
               return (

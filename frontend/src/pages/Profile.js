@@ -24,7 +24,7 @@ function Profile() {
       return;
     }
 
-    axios.get('http://127.0.0.1:5000/api/me', {
+    axios.get('/api/me', {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(res => {
@@ -55,7 +55,7 @@ function Profile() {
 
   const handleProfileUpdate = (updatedData) => {
     const token = localStorage.getItem('token');
-    axios.put('http://127.0.0.1:5000/api/update-profile', updatedData, {
+    axios.put('/api/update-profile', updatedData, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(() => {
@@ -72,7 +72,7 @@ function Profile() {
 
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch("http://127.0.0.1:5000/api/delete-account", {
+      const res = await fetch("/api/delete-account", {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` }
       });
