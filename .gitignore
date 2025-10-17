@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+
+#Baza
+instance/
+
+
+# Node
+node_modules/
+build/
+npm-debug.log
+
+# Docker
+*.log
+
